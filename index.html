@@ -1,68 +1,203 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
-<meta charset="UTF-8">
-
-<style>
-html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.tradingview-widget-container {
-    width: 100%;
-    height: 100vh;
-}
-</style>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ASPIM Macro Monitor</title>
+  <style>
+    :root{
+      --bg:#f7f8fb; --card:#fff; --text:#151922; --muted:#687386;
+      --line:#e3e7ef; --accent:#4f6ef7;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",Arial,sans-serif;background:var(--bg);color:var(--text)}
+    .wrap{max-width:1500px;margin:0 auto;padding:24px}
+    header{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:24px}
+    h1{margin:0 0 6px;font-size:28px}.subtitle,.updated{color:var(--muted);font-size:12px}
+    .refresh{margin-top:7px;border:1px solid var(--line);background:white;border-radius:8px;padding:7px 10px;cursor:pointer}
+    section{margin:28px 0 34px}.section-head{display:flex;align-items:baseline;gap:10px;margin-bottom:12px}
+    .section-head h2{font-size:19px;margin:0}.section-head span{font-size:12px;color:var(--muted)}
+    .grid-1{display:grid;grid-template-columns:1fr;gap:14px}
+    .grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 3px 12px rgba(20,30,55,.05)}
+    .card-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line)}
+    .card-title{font-size:14px;font-weight:700}.card-tag{font-size:10px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:3px 7px}
+    .tv{height:410px;width:100%}.fred{width:100%;min-height:290px;display:block;background:white}
+    .foot{padding:8px 12px 11px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:11px}
+    .foot a{color:var(--accent);text-decoration:none}
+    .note{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;font-size:13px;line-height:1.65;color:#3f4959}
+    @media(max-width:1050px){.grid-3,.grid-2{grid-template-columns:1fr}.tv{height:360px}}
+  </style>
 </head>
-
 <body>
+<div class="wrap">
 
-<div class="tradingview-widget-container">
+<header>
+  <div>
+    <h1>ASPIM Macro Monitor</h1>
+    <div class="subtitle">FX → US Rates → Credit Risk → Credit Spreads</div>
+  </div>
+  <div class="updated">
+    <div id="updated"></div>
+    <button class="refresh" onclick="location.reload()">↻ 새로고침</button>
+  </div>
+</header>
 
-<div class="tradingview-widget-container__widget"></div>
+<section>
+  <div class="section-head"><h2>1. 통화 / FX</h2><span>TradingView · 시장가격</span></div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-head"><div class="card-title">USD / JPY</div><div class="card-tag">FX:USDJPY</div></div>
+      <div class="tv tradingview-widget-container">
+        <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+        {
+          "autosize": true,
+          "symbol": "FX:USDJPY",
+          "interval": "D",
+          "timezone": "Asia/Seoul",
+          "theme": "light",
+          "style": "3",
+          "locale": "kr",
+          "allow_symbol_change": false,
+          "hide_side_toolbar": true,
+          "withdateranges": true,
+          "save_image": false,
+          "calendar": false,
+          "support_host": "https://www.tradingview.com"
+        }
+        </script>
+      </div>
+    </div>
 
-<script
-type="text/javascript"
-src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js"
-async>
+    <div class="card">
+      <div class="card-head"><div class="card-title">Dollar Index (DXY)</div><div class="card-tag">CAPITALCOM:DXY</div></div>
+      <div class="tv tradingview-widget-container">
+        <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+        {
+          "autosize": true,
+          "symbol": "CAPITALCOM:DXY",
+          "interval": "D",
+          "timezone": "Asia/Seoul",
+          "theme": "light",
+          "style": "3",
+          "locale": "kr",
+          "allow_symbol_change": false,
+          "hide_side_toolbar": true,
+          "withdateranges": true,
+          "save_image": false,
+          "calendar": false,
+          "support_host": "https://www.tradingview.com"
+        }
+        </script>
+      </div>
+    </div>
+  </div>
+</section>
 
-{
-  "autosize": true,
+<section>
+  <div class="section-head"><h2>2. 미국채 금리</h2><span>FRED · 최근 18개월</span></div>
+  <div class="grid-3">
+    <div class="card">
+      <div class="card-head"><div class="card-title">US Treasury 2Y</div><div class="card-tag">DGS2</div></div>
+      <img class="fred fred-img" data-series="DGS2" alt="US 2Y Treasury Yield" />
+      <div class="foot"><span>Daily · %</span><a href="https://fred.stlouisfed.org/series/DGS2" target="_blank">FRED 원본 ↗</a></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="card-title">US Treasury 10Y</div><div class="card-tag">DGS10</div></div>
+      <img class="fred fred-img" data-series="DGS10" alt="US 10Y Treasury Yield" />
+      <div class="foot"><span>Daily · %</span><a href="https://fred.stlouisfed.org/series/DGS10" target="_blank">FRED 원본 ↗</a></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="card-title">US Treasury 30Y</div><div class="card-tag">DGS30</div></div>
+      <img class="fred fred-img" data-series="DGS30" alt="US 30Y Treasury Yield" />
+      <div class="foot"><span>Daily · %</span><a href="https://fred.stlouisfed.org/series/DGS30" target="_blank">FRED 원본 ↗</a></div>
+    </div>
+  </div>
+</section>
 
-  "symbol": "FOREXCOM:SPXUSD",
+<section>
+  <div class="section-head"><h2>3. 신용위험 / Private Credit</h2><span>TradingView · 조기경보용</span></div>
+  <div class="grid-1">
+    <div class="card">
+      <div class="card-head"><div class="card-title">Blue Owl Capital</div><div class="card-tag">NYSE:OWL</div></div>
+      <div class="tv tradingview-widget-container">
+        <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+        {
+          "autosize": true,
+          "symbol": "NYSE:OWL",
+          "interval": "D",
+          "timezone": "Asia/Seoul",
+          "theme": "light",
+          "style": "3",
+          "locale": "kr",
+          "allow_symbol_change": false,
+          "hide_side_toolbar": true,
+          "withdateranges": true,
+          "save_image": false,
+          "calendar": false,
+          "support_host": "https://www.tradingview.com"
+        }
+        </script>
+      </div>
+    </div>
+  </div>
+</section>
 
-  "interval": "5",
+<section>
+  <div class="section-head"><h2>4. 크레딧 스프레드</h2><span>FRED · ICE BofA OAS · 최근 18개월</span></div>
+  <div class="grid-3">
+    <div class="card">
+      <div class="card-head"><div class="card-title">IG OAS</div><div class="card-tag">BAMLC0A0CM</div></div>
+      <img class="fred fred-img" data-series="BAMLC0A0CM" alt="IG OAS" />
+      <div class="foot"><span>ICE BofA US Corporate OAS</span><a href="https://fred.stlouisfed.org/series/BAMLC0A0CM" target="_blank">FRED 원본 ↗</a></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="card-title">HY OAS</div><div class="card-tag">BAMLH0A0HYM2</div></div>
+      <img class="fred fred-img" data-series="BAMLH0A0HYM2" alt="HY OAS" />
+      <div class="foot"><span>ICE BofA US High Yield OAS</span><a href="https://fred.stlouisfed.org/series/BAMLH0A0HYM2" target="_blank">FRED 원본 ↗</a></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="card-title">CCC & Lower OAS</div><div class="card-tag">BAMLH0A3HYC</div></div>
+      <img class="fred fred-img" data-series="BAMLH0A3HYC" alt="CCC and Lower OAS" />
+      <div class="foot"><span>ICE BofA CCC & Lower OAS</span><a href="https://fred.stlouisfed.org/series/BAMLH0A3HYC" target="_blank">FRED 원본 ↗</a></div>
+    </div>
+  </div>
+</section>
 
-  "timezone": "Asia/Seoul",
-
-  "theme": "light",
-
-  "style": "3",
-
-  "locale": "kr",
-
-  "withdateranges": true,
-
-  "hide_side_toolbar": true,
-
-  "allow_symbol_change": false,
-
-  "save_image": false,
-
-  "calendar": false,
-
-  "support_host": "https://www.tradingview.com"
-}
-
-</script>
+<div class="note">
+  <b>읽는 순서</b><br>
+  ① 장기금리가 올라가는가 → ② CCC/HY OAS가 같이 확대되는가 →
+  ③ Blue Owl 같은 Private Credit 주가가 무너지는가를 같이 확인하세요.
+  장기금리 상승만으로는 신용위기로 보지 않고, Credit Spread와 Private Credit으로 전염되는지가 핵심입니다.<br><br>
+  <b>데이터 갱신</b><br>
+  TradingView는 시장 데이터에 따라 자동 갱신됩니다.
+  FRED 차트는 페이지를 새로고침할 때 최신 데이터를 다시 불러오며 항상 최근 약 18개월을 표시합니다.
+</div>
 
 </div>
 
-</body>
+<script>
+document.getElementById("updated").textContent =
+  "Page loaded · " + new Date().toLocaleString("ko-KR");
 
+const now = new Date();
+const start = new Date(now);
+start.setMonth(start.getMonth() - 18);
+
+const y = start.getFullYear();
+const m = String(start.getMonth() + 1).padStart(2, "0");
+const d = String(start.getDate()).padStart(2, "0");
+const cosd = `${y}-${m}-${d}`;
+
+document.querySelectorAll(".fred-img").forEach(img => {
+  const series = img.dataset.series;
+  img.src = `https://fred.stlouisfed.org/graph/fredgraph.png?id=${series}&cosd=${cosd}&width=900&height=450`;
+});
+</script>
+
+</body>
 </html>
