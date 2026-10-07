@@ -35,7 +35,7 @@
 
 <header>
   <div>
-    <h1>ASPIM Macro Monitor <span style='font-size:13px;color:#687386;font-weight:500'>v1.4</span></h1>
+    <h1>ASPIM Macro Monitor <span style='font-size:13px;color:#687386;font-weight:500'>v1.5</span></h1>
     <div class="subtitle">FX → US Rates → Credit Risk → Credit Spreads</div>
   </div>
   <div class="updated">
@@ -94,6 +94,30 @@
         </script>
       </div>
     </div>
+
+    <div class="card">
+      <div class="card-head"><div class="card-title">USD / KRW</div><div class="card-tag">FX_IDC:USDKRW</div></div>
+      <div class="tv tradingview-widget-container">
+        <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+        {
+          "autosize": true,
+          "symbol": "FX_IDC:USDKRW",
+          "interval": "D",
+          "timezone": "Asia/Seoul",
+          "theme": "light",
+          "style": "3",
+          "locale": "kr",
+          "allow_symbol_change": false,
+          "hide_side_toolbar": true,
+          "withdateranges": true,
+          "save_image": false,
+          "calendar": false,
+          "support_host": "https://www.tradingview.com"
+        }
+        </script>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -120,7 +144,7 @@
 
 <section>
   <div class="section-head"><h2>3. 신용위험 / Private Credit</h2><span>TradingView · 조기경보용</span></div>
-  <div class="grid-1">
+  <div class="grid-2">
     <div class="card">
       <div class="card-head"><div class="card-title">Blue Owl Capital</div><div class="card-tag">NYSE:OWL</div></div>
       <div class="tv tradingview-widget-container">
@@ -129,6 +153,30 @@
         {
           "autosize": true,
           "symbol": "NYSE:OWL",
+          "interval": "D",
+          "timezone": "Asia/Seoul",
+          "theme": "light",
+          "style": "3",
+          "locale": "kr",
+          "allow_symbol_change": false,
+          "hide_side_toolbar": true,
+          "withdateranges": true,
+          "save_image": false,
+          "calendar": false,
+          "support_host": "https://www.tradingview.com"
+        }
+        </script>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><div class="card-title">Oracle</div><div class="card-tag">NYSE:ORCL</div></div>
+      <div class="tv tradingview-widget-container">
+        <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+        {
+          "autosize": true,
+          "symbol": "NYSE:ORCL",
           "interval": "D",
           "timezone": "Asia/Seoul",
           "theme": "light",
